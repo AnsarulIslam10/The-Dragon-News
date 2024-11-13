@@ -1,11 +1,14 @@
-import React from 'react';
-
+import React from "react";
+import logo from "../assets/logo.png";
 const Header = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return (
+    <div className="flex flex-col justify-center items-center gap-2 py-6">
+      <div>
+        <img className="w-[471px]" src={logo} alt="" />
+      </div>
+      <h2 className="text-gray-400">Journalism Without Fear or Favour</h2>
+    </div>
+  );
 };
 
 export default Header;
