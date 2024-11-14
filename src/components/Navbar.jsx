@@ -12,7 +12,7 @@ const Navbar = () => {
             </div>
             <div className='flex items-center gap-2'>
                 <img src={userIcon} alt="" />
-                <button className='btn px-10 py-2 rounded-none bg-[#403f3f] hover:bg-[#4a4a4a] text-base-100'>Login</button>
+                <Link to={'/auth/login'} className='btn px-10 py-2 rounded-none bg-[#403f3f] hover:bg-[#4a4a4a] text-base-100'>Login</Link>
             </div>
         </div>
     );
