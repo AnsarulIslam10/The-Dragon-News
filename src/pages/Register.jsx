@@ -1,28 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
-    const {createNewUser, setUser} = useContext(AuthContext)
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const { createNewUser, setUser } = useContext(AuthContext);
+  const [error, setError] = useState([]);
 
-    const form = new FormData(e.target)
-    const name = form.get("name")
-    const photo = form.get("photo")
-    const email = form.get("email")
-    const password = form.get("password")
-    console.log({name, photo, email, password})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+    const name = form.get("name");
+    if (name.length < 5) {
+      setError({ ...error, name: "name must be at least 5 charecters" });
+      return;
+    }
+    const photo = form.get("photo");
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log({ name, photo, email, password });
 
     createNewUser(email, password)
-    .then(result =>{
-        const user = result.user
-        console.log(user)
-        setUser(user)
-    }) .catch((error) => {
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setUser(user);
+      })
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
+        console.log(errorCode, errorMessage);
       });
   };
 
@@ -45,6 +52,9 @@ const Register = () => {
               required
             />
           </div>
+          {error.name && (
+            <label className="text-sm text-red-600">{error.name}</label>
+          )}
           <div className="form-control">
             <label className="label">
               <span className="label-text">Photo URL</span>

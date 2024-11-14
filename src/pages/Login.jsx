@@ -1,34 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
-    const { userLogin, setUser } =useContext(AuthContext);
-    const location = useLocation()
-    const navigate = useNavigate()
-    console.log(location)
-    const handleSubmit =(e)=>{
-        e.preventDefault();
+  const { userLogin, setUser } = useContext(AuthContext);
+  const [error, setError] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        const form = new FormData(e.target)
+    const form = new FormData(e.target);
 
-        const email = form.get("email")
-        const password = form.get("password")
-        console.log({email, password})
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log({ email, password });
 
-        userLogin(email, password)
-        .then(result =>{
-            const user = result.user
-            console.log(user)
-            setUser(user)
-            navigate(location?.state ? location.state : "/")
-        }) .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorCode, errorMessage)
-          });
-        
-    }
+    userLogin(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setUser(user);
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        setError({ ...error, login: err.code });
+      });
+  };
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="card bg-base-100 w-full max-w-lg shrink-0 rounded-none p-10">
@@ -59,6 +58,10 @@ const Login = () => {
               className="input input-bordered"
               required
             />
+            {error.login && (
+            <label className="text-sm text-red-600"> 
+                {error.login}
+            </label>)}
             <label className="label">
               <a href="#" className="label-text-alt link link-hover">
                 Forgot password?
