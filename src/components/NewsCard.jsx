@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import { FaShareAlt, FaRegEye } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 const NewsCard = (props = {}) => {
-    const {news} = props || {};
+  const { news } = props || {};
 
-    return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+  return (
+    <div className="p-4 animate__animated animate__zoomIn animate__fast bg-white rounded-lg shadow-md">
       {/* Author Information */}
       <div className="flex items-center mb-4">
         <img
@@ -36,7 +36,9 @@ const NewsCard = (props = {}) => {
       {/* Details */}
       <p className="text-gray-700 text-sm mb-4">
         {news.details.slice(0, 150)}...{" "}
-        <Link to={`/news/${news._id}`} className="text-primary">Read More</Link>
+        <Link to={`/news/${news._id}`} className="text-primary">
+          Read More
+        </Link>
       </p>
 
       {/* Ratings and Views */}
@@ -61,7 +63,7 @@ const NewsCard = (props = {}) => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default NewsCard;
